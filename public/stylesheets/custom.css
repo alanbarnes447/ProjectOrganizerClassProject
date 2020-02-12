@@ -1,8 +1,20 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* Applied to: index.ejs */
+#index-bg {
+  padding: 200px 0px;
+  background: url(/images/index-bg.jpg) no-repeat center center fixed;
+  display: table;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  background-size: cover;
 }
 
-a {
-  color: #00B7FF;
+.jumbotron {
+  margin-bottom: 0px;
+}
+
+/* Applied to: our-team.ejs */
+#team-container {
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
