@@ -1,0 +1,50 @@
+<!-- Modal -->
+<div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupModal">Sign up</h5>
+      </div>
+      <div class="modal-body">
+        <form id="signup-form" action="register" method="post">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input
+              type="username"
+              id="username"
+              name="username"
+              class="form-control"
+              placeholder="Enter Username"
+              value="<%= typeof regUsername != 'undefined' ? regUsername : '' %>"
+              required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="emailR"
+              name="email"
+              class="form-control"
+              placeholder="Enter Email"
+              value="<%= typeof regEmail != 'undefined' ? regEmail : '' %>"
+              required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="passwordR"
+              name="password"
+              class="form-control"
+              placeholder="Enter Password"
+              required />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" form="signup-form" class="btn btn-primary">Register Account</button>
+      </div>
+    </div>
+  </div>
+</div>

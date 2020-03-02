@@ -1,0 +1,43 @@
+<% include alerts.ejs %>
+
+<% include login-modal.ejs %>
+<% include signup-modal.ejs %>
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="/">
+    <img src="images/ppo-logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    Personal Project Organizer
+  </a>
+  <ul class="navbar-nav list-group-horizontal">
+    <li class="nav-item list-inline-item">
+      <a class="nav-link" href="about">About the Software</a>
+    </li>
+    <li class="nav-item list-inline-item">
+      <a class="nav-link" href="our-team">Our Team</a>
+    </li>
+    <% if (typeof user != 'undefined') { %>
+      <li class="nav-item list-inline-item">
+        <a class="nav-link" href="dashboard">My Dashboard</a>
+      </li>
+    <% } %>
+  </ul>
+  <% if (typeof user == 'undefined') { %>
+  <ul class="navbar-nav ml-auto list-group-horizontal">
+    <li class="nav-item list-inline-item">
+      <button type="button" id="login-btn" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#login-modal">Login</button>
+    </li>
+    <li class="nav-item list-inline-item">
+      <button type="button" id="signup-btn" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#signup-modal">Sign Up</button>
+    </li>
+  </ul>
+  <% } %>
+  <% if (typeof user != 'undefined') { %>
+  <ul class="navbar-nav ml-auto list-group-horizontal">
+    <li class="nav-item list-inline-item">
+      <form id="sign-out-form" action="sign-out" method="post">
+        <button type="submit" form="sign-out-form" class="btn btn-sm btn-outline-secondary">Sign Out</button>
+      </form>
+    </li>
+  </ul>
+  <% } %>
+</nav>

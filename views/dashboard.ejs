@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= user.username %>'s Dashboard</title>
+  <% include partials/dependencies.ejs %>
+  <% include partials/custom.ejs %>
+</head>
+
+<body>
+  <% include partials/navbar.ejs %>
+  <div class="jumbotron jumbotron-fluid text-center">
+    <div class="container">
+      <h1 class="display-4">Welcome, <%= user.username %></h1>
+      <hr class="my-4">
+      <p class="lead">Filler.</p>
+    </div>
+  </div>
+  <% include partials/footer.ejs %>
+</body>
+
+</html>

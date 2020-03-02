@@ -1,3 +1,8 @@
+/* Applied to: all pages */
+button:focus {
+  outline: none;
+}
+
 /* Applied to: index.ejs */
 #index-bg {
   padding: 200px 0px;
@@ -17,4 +22,9 @@
 #team-container {
   padding-top: 25px;
   padding-bottom: 25px;
+}
+
+/* Applied to: all alerts */
+.alert {
+  margin-bottom: 0px;
 }
