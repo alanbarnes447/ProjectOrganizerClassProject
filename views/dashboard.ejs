@@ -61,10 +61,34 @@
     var calendar = new FullCalendar.Calendar(calendarEl, {
       height: 600,
       plugins: ['dayGrid', 'interaction'],
-      dateClick: function(info) {
-        alert('Clicked on: ' + info.dateStr);
-        // change the day's background color just for fun
-        info.dayEl.style.backgroundColor = 'red';
+      defaultView: 'dayGridMonth',
+      header: {
+        center: 'addEventButton'
+      },
+      customButtons: {
+        addEventButton: {
+          text: 'Add Event',
+          click: function() {
+            var promptStr = prompt('Enter date (MM-DD-YYYY):'); // YYYY-MM-DD
+            var arr = promptStr.split('-');
+            var date = new Date(arr[2] + '-' + arr[0] + '-' + arr[1] + 'T00:00:00');
+
+            if (!isNaN(date.valueOf())) { // Check if isValid.
+              var titleStr = prompt('Enter title for event:');
+
+              calendar.addEvent({
+                title: titleStr,
+                start: date,
+                allDay: true
+              });
+
+              // Send https req to update db
+              alert('Now, update the db.');
+            } else {
+              alert('Request could not be processed: Invalid date entered.');
+            }
+          }
+        }
       }
     });
 
