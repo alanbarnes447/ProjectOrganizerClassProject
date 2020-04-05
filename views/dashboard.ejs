@@ -7,16 +7,69 @@
   <% include partials/custom.ejs %>
 </head>
 
-<body>
+<body id="dashboard-body">
   <% include partials/navbar.ejs %>
-  <div class="jumbotron jumbotron-fluid text-center">
-    <div class="container">
-      <h1 class="display-4">Welcome, <%= user.username %></h1>
-      <hr class="my-4">
-      <p class="lead">Filler.</p>
+  <div class="container-fluid text-center" id="user-banner">
+    <div class="row">
+      <div class="container-fluid px-4">
+        <div class="row py-4">
+          <div class="col col-sm text-center mb-0">
+            <span class="text-uppercase"><%= user.username %>'s Dashboard</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex" id="wrapper">
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading"><b>Quick Nav</b></div>
+      <div class="list-group list-group-flush">
+        <a href="#calendar-view" class="list-group-item list-group-item-action bg-light">Calendar</a>
+        <a href="#task-panel-view" class="list-group-item list-group-item-action bg-light">Task Panel</a>
+      </div>
+    </div>
+    <div id="page-content-wrapper">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary btn-sm" id="menu-toggle">Toggle Quick Nav</button>
+      </nav>
+      <div class="container-fluid" id="a">
+        <!-- Content goes here -->
+        <div class="container" id="calendar-view">
+          <div class="row">
+            <div id='calendar'></div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid" id="b">
+        <h1 class="mt-4">Task Panel View</h1>
+        <!-- Content goes here -->
+      </div>
     </div>
   </div>
   <% include partials/footer.ejs %>
 </body>
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      height: 600,
+      plugins: ['dayGrid', 'interaction'],
+      dateClick: function(info) {
+        alert('Clicked on: ' + info.dateStr);
+        // change the day's background color just for fun
+        info.dayEl.style.backgroundColor = 'red';
+      }
+    });
+
+    calendar.render();
+  });
+</script>
 
 </html>
