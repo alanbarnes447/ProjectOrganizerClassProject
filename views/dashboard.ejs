@@ -38,6 +38,11 @@
           <div class="row">
             <div id='calendar'></div>
           </div>
+          <div class="row">
+            <!-- <% if (typeof event != 'undefined') { %>
+              <p><%= JSON.stringify(event) %></p>
+            <% } %> -->
+          </div>
         </div>
       </div>
       <div class="container-fluid" id="b">
@@ -72,6 +77,7 @@
             var promptStr = prompt('Enter date (MM-DD-YYYY):'); // YYYY-MM-DD
             var arr = promptStr.split('-');
             var date = new Date(arr[2] + '-' + arr[0] + '-' + arr[1] + 'T00:00:00');
+            var dateStr = new String(arr[2] + '-' + arr[0] + '-' + arr[1] + 'T00:00:00');
 
             if (!isNaN(date.valueOf())) { // Check if isValid.
               var titleStr = prompt('Enter title for event:');
@@ -79,17 +85,31 @@
               calendar.addEvent({
                 title: titleStr,
                 start: date,
-                allDay: true
+                allDay: true,
+                textColor: 'white'
               });
 
-              // Send https req to update db
-              alert('Now, update the db.');
+              $.post('dashboard/add-event', {
+                  email: '<%= user.email %>',
+                  title: titleStr,
+                  start: dateStr,
+                  allDay: true
+                },
+                function(data, status, xhr) {
+                  $('p').append('status: ' + status + ', data: ' + data);
+                })
+                .done(function() { alert('Request done!'); })
+                .fail(function(jqxhr, settings, ex) { alert('failed, ' + ex);
+              });
             } else {
               alert('Request could not be processed: Invalid date entered.');
             }
           }
         }
-      }
+      },
+      eventSources: [{
+      events: <%- JSON.stringify(event) %>,
+      textColor: 'white' }]
     });
 
     calendar.render();
