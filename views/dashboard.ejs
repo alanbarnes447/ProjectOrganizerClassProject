@@ -9,6 +9,7 @@
 
 <body id="dashboard-body">
   <% include partials/navbar.ejs %>
+  <% include partials/help-modal.ejs %>
   <div class="container-fluid text-center" id="user-banner">
     <div class="row">
       <div class="container-fluid px-4">
@@ -38,10 +39,8 @@
           <div class="row">
             <div id='calendar'></div>
           </div>
-          <div class="row">
-            <!-- <% if (typeof event != 'undefined') { %>
-              <p><%= JSON.stringify(event) %></p>
-            <% } %> -->
+          <div class="row justify-content-end">
+            <p>Need help? Click <a href="#" data-toggle="modal" id="" data-target="#help-modal">here</a>.</p>
           </div>
         </div>
       </div>
@@ -65,10 +64,43 @@
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
       height: 600,
+      aspectRatio: 2,
       plugins: ['dayGrid', 'interaction'],
       defaultView: 'dayGridMonth',
       header: {
         center: 'addEventButton'
+      },
+      dateClick: function(info) {
+        var date = new Date(info.dateStr + 'T00:00:00');
+        var dateStr = info.dateStr + 'T00:00:00';
+
+        if (!isNaN(date.valueOf())) { // Check if isValid.
+          var titleStr = prompt('Enter title for event:');
+
+          if (titleStr != null) {
+            calendar.addEvent({
+              title: titleStr,
+              start: date,
+              allDay: true,
+              textColor: 'white'
+            });
+
+            $.post('dashboard/add-event', {
+                email: '<%= user.email %>',
+                title: titleStr,
+                start: dateStr,
+                allDay: true
+              },
+              function(data, status, xhr) {
+                console.log('status: ' + status + ', data: ' + data);
+              })
+              .done(function() { return; })
+              .fail(function(jqxhr, settings, ex) { alert('failed, ' + ex);
+            });
+          }
+        } else {
+          alert('Request could not be processed: Invalid date entered.');
+        }
       },
       customButtons: {
         addEventButton: {
@@ -82,25 +114,27 @@
             if (!isNaN(date.valueOf())) { // Check if isValid.
               var titleStr = prompt('Enter title for event:');
 
-              calendar.addEvent({
-                title: titleStr,
-                start: date,
-                allDay: true,
-                textColor: 'white'
-              });
-
-              $.post('dashboard/add-event', {
-                  email: '<%= user.email %>',
+              if (titleStr != null) {
+                calendar.addEvent({
                   title: titleStr,
-                  start: dateStr,
-                  allDay: true
-                },
-                function(data, status, xhr) {
-                  $('p').append('status: ' + status + ', data: ' + data);
-                })
-                .done(function() { alert('Request done!'); })
-                .fail(function(jqxhr, settings, ex) { alert('failed, ' + ex);
-              });
+                  start: date,
+                  allDay: true,
+                  textColor: 'white'
+                });
+
+                $.post('dashboard/add-event', {
+                    email: '<%= user.email %>',
+                    title: titleStr,
+                    start: dateStr,
+                    allDay: true
+                  },
+                  function(data, status, xhr) {
+                    console.log('status: ' + status + ', data: ' + data);
+                  })
+                  .done(function() { return; })
+                  .fail(function(jqxhr, settings, ex) { alert('failed, ' + ex);
+                });
+              }
             } else {
               alert('Request could not be processed: Invalid date entered.');
             }
@@ -108,8 +142,9 @@
         }
       },
       eventSources: [{
-      events: <%- JSON.stringify(event) %>,
-      textColor: 'white' }]
+        events: <%- JSON.stringify(event) %>,
+        textColor: 'white'
+      }]
     });
 
     calendar.render();
