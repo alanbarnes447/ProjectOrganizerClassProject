@@ -53,6 +53,7 @@
               <th>Title</th>
               <th>Description</th>
               <th>Due</th>
+              <th>Status</th>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
             </tr>
@@ -64,11 +65,12 @@
                   <td><%= eventsTP[i].title %></td>
                   <td><%= eventsTP[i].desc %></td>
                   <td><%= eventsTP[i].start %></td>
+                  <td class="text-center"><%= eventsTP[i].status == false ? "PENDING" : "COMPLETE" %></td>
                   <td class="text-center">
-                    <a href="#"><i id="update-ic" class="fa fa-check" aria-hidden="true"></i></td></a>
+                    <a href="javascript:void(0)" data-id="<%= eventsTP[i]._id %>" id="update"><i id="update-ic" class="fa fa-check" aria-hidden="true"></i></td></a>
                   </td>
                   <td class="text-center">
-                    <a href="#"><i id="delete-ic" class="fa fa-trash" aria-hidden="true"></i></td></a>
+                    <a href="javascript:void(0)" data-id="<%= eventsTP[i]._id %>" id="del"><i id="delete-ic" class="fa fa-trash" aria-hidden="true"></i></td></a>
                   </td>
                 </tr>
               <% } %>
@@ -80,6 +82,46 @@
   </div>
   <% include partials/footer.ejs %>
 </body>
+<!-- jQuery Functions -->
+<script>
+  $('a#update').click(function() {
+    var id = $(this).data('id');
+    var choice = confirm("Update event status to completed?");
+
+    if (choice == true) {
+      $.post('dashboard/update-event', {
+          _id: id
+        },
+        function(data, status, xhr) {
+          console.log('status: ' + status + ', data: ' + data);
+        })
+        .done(function() { return; })
+        .fail(function(jqxhr, settings, ex) { alert('failed, ' + ex);
+      });
+    } else {
+      return;
+    }
+  });
+
+  $('a#del').click(function() {
+    var id = $(this).data('id');
+    var choice = confirm("Delete selected event?");
+
+    if (choice == true) {
+      $.post('dashboard/delete-event', {
+          _id: id
+        },
+        function(data, status, xhr) {
+          console.log('status: ' + status + ', data: ' + data);
+        })
+        .done(function() { return; })
+        .fail(function(jqxhr, settings, ex) { alert('failed, ' + ex);
+      });
+    } else {
+      return;
+    }
+  });
+</script>
 <!-- Modal JS -->
 <script>
   $("#menu-toggle").click(function(e) {
@@ -109,10 +151,20 @@
       },
       dateClick: function(info) {
         var date = new Date(info.dateStr + 'T00:00:00');
+        if (date == null) {
+          return;
+        }
 
         if (!isNaN(date.valueOf())) { // Check if isValid.
           var titleStr = prompt('Enter title for event:');
+          if (titleStr == null) {
+            return;
+          }
+
           var descStr = prompt('Please enter description for event:');
+          if (descStr == null) {
+            return;
+          }
 
           if (titleStr != null && descStr != null) {
             // Add event to frontend,
@@ -153,7 +205,14 @@
 
             if (!isNaN(date.valueOf())) { // Check if isValid.
               var titleStr = prompt('Enter title for event:');
+              if (titleStr == null) {
+                return;
+              }
+
               var descStr = prompt('Please enter description for event:');
+              if (descStr == null) {
+                return;
+              }
 
               if (titleStr != null && descStr != null) {
                 calendar.addEvent({

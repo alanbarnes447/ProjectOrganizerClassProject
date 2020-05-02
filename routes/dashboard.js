@@ -58,12 +58,24 @@ router.post('/add-event', function(req, res, next) {
     .catch(err => console.log(err));
 });
 
-router.post('/delete-event', function(req, res, next) {
+router.post('/update-event', function(req, res, next) {
+  const { _id } = req.body;
 
+  Event.updateOne({ _id: _id }, { status: true }, function(err, res) {
+    if (err) return handleError(err);
+  });
+
+  res.redirect('/');
 });
 
-router.post('/update-event', function(req, res, next) {
+router.post('/delete-event', function(req, res, next) {
+  const { _id } = req.body;
 
+  Event.deleteOne({ _id: _id }, function (err) {
+    if (err) return handleError(err);
+  });
+
+  res.redirect('/');
 });
 
 module.exports = router;
