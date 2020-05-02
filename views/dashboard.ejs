@@ -47,17 +47,53 @@
       <div class="container-fluid" id="b">
         <h1 class="mt-4">Task Panel View</h1>
         <!-- Content goes here -->
+        <table id="task-panel-view" class="table table-striped table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Due</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (typeof event != 'undefined') { %>
+              <% for(var i=0; i < event.length; i++) { %>
+                <tr>
+                  <td><%= event[i].title %></td>
+                  <td>Test</td>
+                  <td><%= event[i].start %></td>
+                  <td class="text-center">
+                    <a href="#"><i class="fa fa-check" aria-hidden="true"></i></td></a>
+                  </td>
+                  <td class="text-center">
+                    <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></td></a>
+                  </td>
+                </tr>
+              <% } %>
+            <% } %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
   <% include partials/footer.ejs %>
 </body>
+<!-- Modal JS -->
 <script>
   $("#menu-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
   });
 </script>
+<!-- Pagination JS -->
+<script>
+  $(document).ready(function() {
+    $('#task-panel-view').DataTable();
+  });
+</script>
+<!-- FullCalendar JS -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
@@ -66,18 +102,20 @@
       height: 600,
       aspectRatio: 2,
       plugins: ['dayGrid', 'interaction'],
-      defaultView: 'dayGridMonth',
       header: {
-        center: 'addEventButton'
+        left: 'title',
+        center: 'addEventButton',
+        right: 'today prev,next'
       },
       dateClick: function(info) {
         var date = new Date(info.dateStr + 'T00:00:00');
-        var dateStr = info.dateStr + 'T00:00:00';
 
         if (!isNaN(date.valueOf())) { // Check if isValid.
           var titleStr = prompt('Enter title for event:');
+          var descStr = prompt('Please enter description for event:');
 
-          if (titleStr != null) {
+          if (titleStr != null && descStr != null) {
+            // Add event to frontend,
             calendar.addEvent({
               title: titleStr,
               start: date,
@@ -85,10 +123,13 @@
               textColor: 'white'
             });
 
+            // Add event to backend.
             $.post('dashboard/add-event', {
                 email: '<%= user.email %>',
                 title: titleStr,
-                start: dateStr,
+                desc: descStr,
+                status: false,
+                start: date,
                 allDay: true
               },
               function(data, status, xhr) {
@@ -109,12 +150,12 @@
             var promptStr = prompt('Enter date (MM-DD-YYYY):'); // YYYY-MM-DD
             var arr = promptStr.split('-');
             var date = new Date(arr[2] + '-' + arr[0] + '-' + arr[1] + 'T00:00:00');
-            var dateStr = new String(arr[2] + '-' + arr[0] + '-' + arr[1] + 'T00:00:00');
 
             if (!isNaN(date.valueOf())) { // Check if isValid.
               var titleStr = prompt('Enter title for event:');
+              var descStr = prompt('Please enter description for event:');
 
-              if (titleStr != null) {
+              if (titleStr != null && descStr != null) {
                 calendar.addEvent({
                   title: titleStr,
                   start: date,
@@ -125,7 +166,9 @@
                 $.post('dashboard/add-event', {
                     email: '<%= user.email %>',
                     title: titleStr,
-                    start: dateStr,
+                    desc: descStr,
+                    status: false,
+                    start: date,
                     allDay: true
                   },
                   function(data, status, xhr) {
@@ -142,7 +185,7 @@
         }
       },
       eventSources: [{
-        events: <%- JSON.stringify(event) %>,
+        events: <%- JSON.stringify(eventsFC) %>,
         textColor: 'white'
       }]
     });

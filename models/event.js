@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const EventSchema = new mongoose.Schema({
-  email: { // Identifier created by MongoBD.
+  email: { // Identifier used for determining which user added the event.
     type: String,
     required: true
   },
@@ -9,13 +9,17 @@ const EventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  desc: {
+    type: String,
+    required: true
+  },
+  status: {
+    type: Boolean,
+    required: true
+  },
   start: {
     type: Date,
     required: true
-  },
-  end: {
-    type: Date,
-    required: false
   },
   allDay: {
     type: Boolean,
