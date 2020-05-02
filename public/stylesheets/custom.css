@@ -83,3 +83,11 @@ button:focus {
 #calendar {
   margin-top: 20px;
 }
+
+#update-ic {
+  color: green;
+}
+
+#delete-ic {
+  color: red;
+}

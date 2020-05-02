@@ -39,9 +39,6 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 
       events = [];
 
-      // let success = [];
-      // success.push({ alert: 'Successfully loaded events.' });
-
       res.render('dashboard', {
         user: req.user,
         eventsFC: eventsFC,

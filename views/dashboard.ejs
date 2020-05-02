@@ -47,7 +47,7 @@
       <div class="container-fluid" id="b">
         <h1 class="mt-4">Task Panel View</h1>
         <!-- Content goes here -->
-        <table id="task-panel-view" class="table table-striped table-bordered" style="width:100%">
+        <table id="task-panel-view" class="table table-bordered hover" style="width:100%">
           <thead>
             <tr>
               <th>Title</th>
@@ -58,17 +58,17 @@
             </tr>
           </thead>
           <tbody>
-            <% if (typeof event != 'undefined') { %>
-              <% for(var i=0; i < event.length; i++) { %>
+            <% if (typeof eventsTP != 'undefined') { %>
+              <% for(var i=0; i < eventsTP.length; i++) { %>
                 <tr>
-                  <td><%= event[i].title %></td>
-                  <td>Test</td>
-                  <td><%= event[i].start %></td>
+                  <td><%= eventsTP[i].title %></td>
+                  <td><%= eventsTP[i].desc %></td>
+                  <td><%= eventsTP[i].start %></td>
                   <td class="text-center">
-                    <a href="#"><i class="fa fa-check" aria-hidden="true"></i></td></a>
+                    <a href="#"><i id="update-ic" class="fa fa-check" aria-hidden="true"></i></td></a>
                   </td>
                   <td class="text-center">
-                    <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></td></a>
+                    <a href="#"><i id="delete-ic" class="fa fa-trash" aria-hidden="true"></i></td></a>
                   </td>
                 </tr>
               <% } %>
