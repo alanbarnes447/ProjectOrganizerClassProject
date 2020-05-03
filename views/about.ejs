@@ -5,6 +5,13 @@
   <title>About P.P.O.</title>
   <% include partials/dependencies.ejs %>
   <% include partials/custom.ejs %>
+  <style>
+    .about_text {
+      text-indent: 2.5em;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+  </style>
 </head>
 
 <body>
@@ -14,6 +21,23 @@
       <h1 class="display-4">About</h1>
       <hr class="my-4">
       <p class="lead">To the Personal Project Organizer software.</p>
+      <p class="about_text">
+      The inspiration for this software comes from those of us who always have
+      a lot to do and also have a hard time managing the tasks needed to be done.
+      In the absence of a truly one size fits all project organizing software,
+      this software fills the void for a solution that every viewpoint can connect to.
+      This distribution includes a minimal set of functionality needed to organize projects from
+      conception to completion. It is the viewpoint of this development that complex functionality
+      is included behind the scenes and not visible to the user making the software easier to learn
+      for novice computer users and easier to adapt to for those users who do not have time to
+      learn how to use another complicated application. This application is only available online,
+      in the internet website format and there is never any files or software needing to be downloaded
+      and installed.</p>
+      <p class="about_text">This application is being produced as a class project for the Spring 2020 Software
+      Engineering Capstone course, CSC 478, at University of Illinois Springfield. The developers producing
+      this software are <a href="our-team">Alan Barnes, Ricardo Dominguez, and Kati Rowe.</a>
+      And It is being developed using all open source software tools.</p>
+
     </div>
   </div>
   <% include partials/footer.ejs %>
