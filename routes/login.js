@@ -1,6 +1,7 @@
 /*******************************************************************************
 *  User Requirement Definition
-*  Requirement: 4 - The application should allow users with an account to login.
+*  Requirement: 4 - The application should allow users with an account to login
+*                   and verify users
 *
 *  Status: Completed.
 *******************************************************************************/

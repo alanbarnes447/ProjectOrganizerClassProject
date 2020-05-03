@@ -37,6 +37,12 @@
         <!-- Content goes here -->
         <div class="container" id="calendar-view">
           <div class="row">
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            *  User Requirement Definition
+            *  Requirement: 1.1 - The calendar should have a standard month view.
+            *
+            *  Status: Completed.
+           ``~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
             <div id='calendar'></div>
           </div>
           <div class="row justify-content-end">
@@ -45,6 +51,19 @@
         </div>
       </div>
       <div class="container-fluid" id="b">
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        *  User Requirement Definition
+        *  Requirement: 1.2	- The calendar should allow the user to skip between
+        *                     months.
+        *               1.2.1 -	The calendar should have a button that allows
+        *                       the user to add events on any day of the year.
+        *               1.2.2 -	The calendar should display the current month
+        *                       that the user is on.
+        *               1.4 -	Users can view individual project events under a
+        *                     ‘Task Panel View’.
+        *
+        *  Status: Completed.
+       ``~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
         <h1 class="mt-4">Task Panel View</h1>
         <!-- Content goes here -->
         <table id="task-panel-view" class="table table-bordered hover" style="width:100%">
@@ -83,6 +102,15 @@
   <% include partials/footer.ejs %>
 </body>
 <!-- jQuery Functions -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*  User Requirement Definition
+*  Requirement: 1.4.1	- Task Panel View allows users to update project status to
+*                       complete.
+*               1.4.2 -	Task Panel View allows users to delete projects from DB
+*                       and FullCalendar.
+*
+*  Status: Completed.
+``~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <script>
   $('a#update').click(function() {
     var id = $(this).data('id');
@@ -136,6 +164,14 @@
   });
 </script>
 <!-- FullCalendar JS -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*  User Requirement Definition
+*  Requirement: 1.3 -	Users can create new projects as events.
+*               1.3.1	- Users can set project due dates.
+*               1.3.2 -	Multiple projects can be created
+*
+*  Status: Completed.
+``~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
